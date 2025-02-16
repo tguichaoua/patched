@@ -1,0 +1,7 @@
+error: Patch does not support derive for enums
+ --> tests/ui/enum.rs:4:1
+  |
+4 | / enum Foo {
+5 | |     Goo(u64),
+6 | | }
+  | |_^

@@ -1,0 +1,57 @@
+use patched::Patch;
+
+#[test]
+fn patch() {
+    #[derive(Patch, PartialEq, Eq, Debug)]
+    struct Foo {
+        a: u32,
+        b: bool,
+        c: String,
+    }
+
+    let mut value = Foo {
+        a: 50,
+        b: true,
+        c: String::from("Hello"),
+    };
+
+    value.patch(FooPatch {
+        a: Some(10),
+        b: Some(false),
+        ..Default::default()
+    });
+
+    assert_eq!(
+        value,
+        Foo {
+            a: 10,
+            b: false,
+            c: String::from("Hello"),
+        }
+    );
+}
+
+#[test]
+fn from_impl() {
+    #[derive(Patch, Debug, PartialEq, Eq)]
+    #[patch(from, attr = derive(Debug, PartialEq, Eq))]
+    struct Foo {
+        a: u32,
+        b: String,
+    }
+
+    let value = Foo {
+        a: 53,
+        b: String::from("Hello"),
+    };
+
+    let patch = FooPatch::from(value);
+
+    assert_eq!(
+        patch,
+        FooPatch {
+            a: Some(53),
+            b: Some(String::from("Hello"))
+        }
+    );
+}

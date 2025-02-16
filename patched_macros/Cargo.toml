@@ -1,0 +1,17 @@
+[package]
+name = "patched_macros"
+version = "0.1.0"
+authors = ["Tristan Guichaoua <tguichaoua.dev@gmail.com>"]
+edition = "2021"
+description = "Macro for patch like structure"
+keywords = ["macros", "patch"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/tguichaoua/patched"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+proc-macro2 = "1"
+quote = "1"
+syn = "2"

@@ -1,0 +1,8 @@
+error: Patch does not support derive for unions
+ --> tests/ui/union.rs:4:1
+  |
+4 | / union Foo {
+5 | |     a: u64,
+6 | |     b: bool,
+7 | | }
+  | |_^
