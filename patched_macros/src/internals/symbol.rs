@@ -4,9 +4,9 @@ use syn::{Ident, Path};
 #[derive(Copy, Clone)]
 pub struct Symbol(&'static str);
 
-pub const ATTR: Symbol = Symbol("attr");
 pub const FROM: Symbol = Symbol("from");
 pub const PATCH: Symbol = Symbol("patch");
+pub const PATCH_ATTR: Symbol = Symbol("patch_attr");
 pub const NAME: Symbol = Symbol("name");
 pub const WITH: Symbol = Symbol("with");
 

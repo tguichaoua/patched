@@ -36,7 +36,7 @@ use syn::{parse_macro_input, DeriveInput};
 ///     a: String,
 /// }
 /// ```
-#[proc_macro_derive(Patch, attributes(patch))]
+#[proc_macro_derive(Patch, attributes(patch, patch_attr))]
 pub fn derive_patch(item: TokenStream) -> TokenStream {
     let mut input = parse_macro_input!(item as DeriveInput);
     expand::derive_patch(&mut input)
