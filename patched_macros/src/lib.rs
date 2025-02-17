@@ -11,20 +11,21 @@ use syn::{parse_macro_input, DeriveInput};
 ///
 /// # Container attributes
 ///
+/// - `#[patch_attr( attribute )]`: put `attribute` on the patch struct.
 /// - `#[patch(name = Foo)]`: set the name of the patch struct.
-/// - `#[patch(attr = ...)]`: pass an attribute to put on the patch struct.
 /// - `#[patch(from)]`: impl the `From` trait on the patch struct.
 ///
 /// # Field attributes
 ///
+/// - `#[patch_attr( attribute )]`: put `attribute` on the patch struct's field.
 /// - `#[patch(with = StructPatch)]`: set the type of the field on the patch struct.
-/// - `#[patch(attr = ...)]`: pass an attribute to put on the patch struct's field.
 ///
 /// # Example
 ///
 /// ```
 /// # use patched::Patch;
 /// #[derive(Patch)]
+/// #[patch_attr(derive(Debug))]
 /// struct Foo {
 ///     a: u64,
 ///     #[patch(with = GooPatch)]
@@ -32,11 +33,12 @@ use syn::{parse_macro_input, DeriveInput};
 /// }
 ///
 /// #[derive(Patch)]
+/// #[patch_attr(derive(Debug))]
 /// struct Goo {
 ///     a: String,
 /// }
 /// ```
-#[proc_macro_derive(Patch, attributes(patch))]
+#[proc_macro_derive(Patch, attributes(patch, patch_attr))]
 pub fn derive_patch(item: TokenStream) -> TokenStream {
     let mut input = parse_macro_input!(item as DeriveInput);
     expand::derive_patch(&mut input)

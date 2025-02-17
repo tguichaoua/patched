@@ -87,7 +87,8 @@ fn patch_deep() {
 #[test]
 fn from_impl() {
     #[derive(Patch, Debug, PartialEq, Eq)]
-    #[patch(from, attr = derive(Debug, PartialEq, Eq))]
+    #[patch_attr(derive(Debug, PartialEq, Eq))]
+    #[patch(from)]
     struct Foo {
         a: u32,
         b: String,

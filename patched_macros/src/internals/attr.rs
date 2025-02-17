@@ -98,6 +98,28 @@ impl Container {
         let mut impl_from_trait = BoolAttr::none(cx, FROM);
 
         for attr in &item.attrs {
+            if attr.path() == PATCH_ATTR {
+                // #[patch_attr( <attribute> )]
+                match attr.parse_args() {
+                    Ok(meta) => {
+                        path_struct_attributes.insert(
+                            attr,
+                            Attribute {
+                                pound_token: Default::default(),
+                                style: syn::AttrStyle::Outer,
+                                bracket_token: Default::default(),
+                                meta,
+                            },
+                        );
+                    }
+                    Err(error) => {
+                        cx.syn_error(error);
+                    }
+                }
+
+                continue;
+            }
+
             if attr.path() != PATCH {
                 continue;
             }
@@ -112,18 +134,6 @@ impl Container {
                 if meta.path == NAME {
                     // #[patch(name = Foo)]
                     patch_struct_name.set(&meta.path, meta.value()?.parse()?);
-                } else if meta.path == ATTR {
-                    // #[patch(attr = ...)]
-                    let attr_meta: syn::Meta = meta.value()?.parse()?;
-                    path_struct_attributes.insert(
-                        &meta.path,
-                        Attribute {
-                            pound_token: Default::default(),
-                            style: syn::AttrStyle::Outer,
-                            bracket_token: Default::default(),
-                            meta: attr_meta,
-                        },
-                    );
                 } else if meta.path == FROM {
                     impl_from_trait.set_true(&meta.path);
                 } else {
@@ -174,6 +184,28 @@ impl Field {
         let mut path_field_attributes = VecAttr::none();
 
         for attr in &field.attrs {
+            if attr.path() == PATCH_ATTR {
+                // #[patch_attr( <attribute> )]
+                match attr.parse_args() {
+                    Ok(meta) => {
+                        path_field_attributes.insert(
+                            attr,
+                            Attribute {
+                                pound_token: Default::default(),
+                                style: syn::AttrStyle::Outer,
+                                bracket_token: Default::default(),
+                                meta,
+                            },
+                        );
+                    }
+                    Err(error) => {
+                        cx.syn_error(error);
+                    }
+                }
+
+                continue;
+            }
+
             if attr.path() != PATCH {
                 continue;
             }
@@ -188,18 +220,6 @@ impl Field {
                 if meta.path == WITH {
                     // #[patch(with = FooPatch)]
                     with.set(&meta.path, meta.value()?.parse()?);
-                } else if meta.path == ATTR {
-                    // #[patch(attr = ...)]
-                    let attr_meta: syn::Meta = meta.value()?.parse()?;
-                    path_field_attributes.insert(
-                        &meta.path,
-                        Attribute {
-                            pound_token: Default::default(),
-                            style: syn::AttrStyle::Outer,
-                            bracket_token: Default::default(),
-                            meta: attr_meta,
-                        },
-                    );
                 } else {
                     let path = meta.path.to_token_stream().to_string().replace(' ', "");
                     return Err(
