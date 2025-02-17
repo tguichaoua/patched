@@ -1,3 +1,4 @@
+use patched::Merge as _;
 use patched::Patch;
 
 #[test]
@@ -106,6 +107,95 @@ fn from_impl() {
         FooPatch {
             a: Some(53),
             b: Some(String::from("Hello"))
+        }
+    );
+}
+
+#[test]
+fn merge() {
+    #[derive(Patch)]
+    #[patch_attr(derive(Clone, Debug, PartialEq, Eq))]
+    #[patch(name = FooPatch)]
+    struct _Foo {
+        a: u8,
+        b: u8,
+        c: u8,
+        d: u8,
+    }
+
+    let a = FooPatch {
+        a: Some(1),
+        ..Default::default()
+    };
+
+    let b = FooPatch {
+        b: Some(2),
+        ..Default::default()
+    };
+
+    let c = FooPatch {
+        a: Some(99),
+        c: Some(3),
+        ..Default::default()
+    };
+
+    assert_eq!(
+        a.clone().merge(b.clone()),
+        FooPatch {
+            a: Some(1),
+            b: Some(2),
+            c: None,
+            d: None,
+        }
+    );
+
+    assert_eq!(
+        b.clone().merge(a.clone()),
+        FooPatch {
+            a: Some(1),
+            b: Some(2),
+            c: None,
+            d: None,
+        }
+    );
+
+    assert_eq!(
+        a.clone().merge(c.clone()),
+        FooPatch {
+            a: Some(99),
+            b: None,
+            c: Some(3),
+            d: None,
+        }
+    );
+
+    assert_eq!(
+        c.clone().merge(a.clone()),
+        FooPatch {
+            a: Some(1),
+            b: None,
+            c: Some(3),
+            d: None,
+        }
+    );
+
+    assert_eq!(
+        b.clone().merge(c.clone()),
+        FooPatch {
+            a: Some(99),
+            b: Some(2),
+            c: Some(3),
+            d: None,
+        }
+    );
+
+    assert_eq!(
+        c.clone().merge(b.clone()),
+        FooPatch {
+            a: Some(99),
+            b: Some(2),
+            c: Some(3),
+            d: None,
         }
     );
 }
