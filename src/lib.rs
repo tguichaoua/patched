@@ -32,9 +32,9 @@ impl<T> Patch<Option<T>> for T {
 /// ```no_run
 /// # use patched::{Patch, Merge};
 /// # #[derive(Patch)] struct Foo;
-/// # let mut value: Foo = loop {}
-/// # let patch_1: FooPatch = loop {}
-/// # let patch_2: FooPatch = loop {}
+/// # let mut value: Foo = loop {};
+/// # let patch_1: FooPatch = loop {};
+/// # let patch_2: FooPatch = loop {};
 /// // 1
 /// value.patch(patch_1);
 /// value.patch(patch_2);
