@@ -7,6 +7,7 @@ pub trait Patch<P> {
     fn patch(&mut self, patch: P);
 
     /// Consumes `self` and returns a patched version.
+    #[inline]
     fn with_patch(mut self, patch: P) -> Self
     where
         Self: Sized,
@@ -18,6 +19,7 @@ pub trait Patch<P> {
 
 impl<T> Patch<Option<T>> for T {
     /// Sets the value of `self` if `patch` is `Some`.
+    #[inline]
     fn patch(&mut self, patch: Option<T>) {
         if let Some(value) = patch {
             *self = value;
