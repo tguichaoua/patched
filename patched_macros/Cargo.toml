@@ -1,6 +1,6 @@
 [package]
 name = "patched_macros"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Tristan Guichaoua <tguichaoua.dev@gmail.com>"]
 edition = "2021"
 description = "Macro for patch like structure"

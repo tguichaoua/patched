@@ -4,7 +4,7 @@ resolver = "2"
 
 [package]
 name = "patched"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Tristan Guichaoua <tguichaoua.dev@gmail.com>"]
 edition = "2021"
 description = "Macro for patch like structure"
@@ -17,7 +17,7 @@ default = ["macros"]
 macros = ["dep:patched_macros"]
 
 [dependencies]
-patched_macros = { version = "0.1.0", path = "patched_macros", optional = true }
+patched_macros = { version = "0.2.0", path = "patched_macros", optional = true }
 
 [dev-dependencies]
 trybuild = "1"
