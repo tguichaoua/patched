@@ -25,7 +25,23 @@ impl<T> Patch<Option<T>> for T {
     }
 }
 
-/// An operator that merges two values.
+/// An operator that merges two patch values.
+///
+/// This operation must be coherent with [`Patch`] so that the two following codes are equivalent.
+///
+/// ```no_run
+/// # use patched::{Patch, Merge};
+/// # #[derive(Patch)] struct Foo;
+/// # let mut value: Foo = loop {}
+/// # let patch_1: FooPatch = loop {}
+/// # let patch_2: FooPatch = loop {}
+/// // 1
+/// value.patch(patch_1);
+/// value.patch(patch_2);
+///
+/// // 2
+/// value.patch(patch_1.merge(patch_2))
+/// ```
 pub trait Merge<Rhs = Self> {
     /// The result of the merge operation.
     type Output;
