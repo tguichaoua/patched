@@ -61,7 +61,7 @@ fn expand_patch_struct(container: &Container) -> TokenStream {
                 let name = &field.member;
                 let ty = field.attrs.patch_ty();
                 let attrs = field.attrs.path_field_attributes();
-                quote! { #(#attrs)* #name: #ty }
+                quote! { #(#attrs)* pub #name: #ty }
             });
             quote! {
                 { #(#fields),* }
@@ -71,7 +71,7 @@ fn expand_patch_struct(container: &Container) -> TokenStream {
             let fields = container.fields.iter().map(|field| {
                 let ty = field.attrs.patch_ty();
                 let attrs = field.attrs.path_field_attributes();
-                quote! { #(#attrs)* #ty }
+                quote! { #(#attrs)* pub #ty }
             });
             quote! {
                 ( #(#fields),* );
