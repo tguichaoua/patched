@@ -13,7 +13,6 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/tguichaoua/patched"
 
 [features]
-default = ["macros"]
 macros = ["dep:patched_macros"]
 
 [dependencies]
